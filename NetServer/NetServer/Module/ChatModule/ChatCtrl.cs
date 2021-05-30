@@ -18,7 +18,7 @@ namespace NetServer
         public void m_chat_module_toc(string data,Client client)
         {
             Console.WriteLine(data);
-
+            m_chat_module_tos(data, client);
         }
 
         public void m_chat_module_tos(string data, Client client)

@@ -46,6 +46,7 @@ namespace NetServer
             Socket clientSocket = serverSocket.EndAccept(async);
             Console.WriteLine("收到一位用户尝试连接服务器" + (clientSocket.RemoteEndPoint as IPEndPoint).Address);
             Client client = new Client(clientSocket, this);
+            client.Start();
             clientList.Add(client);
         }
 

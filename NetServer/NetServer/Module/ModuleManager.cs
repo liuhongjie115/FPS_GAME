@@ -31,7 +31,7 @@ namespace NetServer
         public void RegisterNet(Object ctrl)
         {
             registerList.Add(ctrl);
-            HandlerRequest("m_chat_module_toc", "123", null);
+            //HandlerRequest("m_chat_module_toc", "123", null);
         }
 
         public void HandlerRequest(string methodStr, string data, Client client)

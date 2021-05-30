@@ -19,9 +19,16 @@ public class Net
         }
     }
 
+    public NetSocket NetSocket { get => netSocket;}
+
     public void Init()
     {
         netSocket = new NetSocket();
         netSocket.Init();
+    }
+
+    public void HandlerRequest(string methodStr, string data)
+    {
+
     }
 }
