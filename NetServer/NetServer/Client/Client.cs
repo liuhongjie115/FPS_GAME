@@ -47,14 +47,14 @@ namespace NetServer
             }
         }
 
-        private void OnProcessMessage(string methodStr,Byte[] data)
+        private void OnProcessMessage(string methodStr,string data)
         {
             server.HandlerRequest(methodStr,data, this);
         }
 
-        private void SendMessage(string s)
+        public void SendMessage(string methodStr,string s)
         {
-            
+            clientSocket.Send(msg.PackData(methodStr, s));
         }
 
         private void Close()

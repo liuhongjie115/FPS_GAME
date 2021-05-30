@@ -14,12 +14,14 @@ namespace NetServer
         private Socket serverSocket;
 
         private List<Client> clientList;
-        private ProtoManager protoManager;
+
+        private ModuleManager moduleManager;
+        internal ModuleManager ModuleManager { get => moduleManager; }
 
         public Server() { }
         public Server(string ipStr,int port)
         {
-
+            SetIPAndPort(ipStr, port);
         }
 
         private void SetIPAndPort(string ipStr,int port)
@@ -29,12 +31,14 @@ namespace NetServer
 
         public void Start()
         {
-            protoManager = new ProtoManager(this);
+
             clientList = new List<Client>();
             serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             serverSocket.Bind(iPEndPoint);
             serverSocket.Listen(0);
             serverSocket.BeginAccept(AcceptCallBack, null);
+            moduleManager = new ModuleManager();
+            moduleManager.Bind(this);
         }
 
         private void AcceptCallBack(IAsyncResult async)
@@ -45,9 +49,9 @@ namespace NetServer
             clientList.Add(client);
         }
 
-        public void HandlerRequest(string methodStr,Byte[] data,Client client)
+        public void HandlerRequest(string methodStr,string data,Client client)
         {
-            protoManager.HandlerRequest(methodStr,data, client);
+            moduleManager.HandlerRequest(methodStr,data, client);
         }
 
         public void RemoveClient(Client client)
@@ -57,6 +61,8 @@ namespace NetServer
                 clientList.Remove(client);
             }
         }
+
+ 
 
     }
 }
