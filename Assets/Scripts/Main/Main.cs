@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Main : MonoBehaviour
 {
-    private void Start()
+    private void Awake()
     {
         Init();
     }
@@ -12,10 +12,21 @@ public class Main : MonoBehaviour
     private void Init()
     {
         InitNet();
+        InitModule();
     }
 
     private void InitNet()
     {
         Net.Instance.Init();
+    }
+
+    private void InitModule()
+    {
+        ModuleManager.Instance.Bind();
+    }
+
+    private void Update()
+    {
+        ModuleManager.Instance.Update();
     }
 }

@@ -18,7 +18,7 @@ public class NetSocket
         try
         {
             clientSocket.Connect(IP, PORT);
-
+            Start();
         }
         catch (Exception e)
         {
@@ -38,17 +38,28 @@ public class NetSocket
         {
             if (clientSocket == null || clientSocket.Connected == false) return;
             int count = clientSocket.EndReceive(ar);
-            msg.ReadMessage(count);
+            msg.ReadMessage(count,OnProcessMessage);
             Start();
         }
         catch (Exception e)
         {
-            Debug.Log(e);
+            Debug.Log(e.Message);
         }
     }
 
-    public void SendMessage(string str)
+    /// <summary>
+    /// 收到消息回调
+    /// </summary>
+    /// <param name="methodStr"></param>
+    /// <param name="data"></param>
+    private void OnProcessMessage(string methodStr, string data)
     {
-        clientSocket.Send(msg.PackData(str));
+        ModuleManager.Instance.HandlerRequest(methodStr, data);
+    }
+
+    public void SendMessage(string methodStr,string str)
+    {
+        clientSocket.Send(msg.PackData(methodStr,str));
+        Debug.Log("发送");
     }
 }

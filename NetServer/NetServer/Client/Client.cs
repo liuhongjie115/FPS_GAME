@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,21 +41,25 @@ namespace NetServer
                     msg.ReadMessage(count,OnProcessMessage);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
-                throw;
+                Console.Write(e.Message);
+            }
+            finally
+            {
+                Start();
             }
         }
 
-        private void OnProcessMessage(string methodStr,Byte[] data)
+        private void OnProcessMessage(string methodStr,string data)
         {
             server.HandlerRequest(methodStr,data, this);
         }
 
-        private void SendMessage(string s)
+        public void SendMessage(string methodStr,string s)
         {
-            
+            clientSocket.Send(msg.PackData(methodStr, s));
         }
 
         private void Close()
@@ -63,6 +68,7 @@ namespace NetServer
             {
                 clientSocket.Close();
                 server.RemoveClient(this);
+                Console.WriteLine("移除一个客户端:"+(clientSocket.RemoteEndPoint as IPEndPoint).Address);
             }
         }
     }
