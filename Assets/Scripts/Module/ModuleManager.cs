@@ -40,7 +40,7 @@ public class ModuleManager
     private List<System.Object> registerList;
     private Queue<MsgItem> msgQueues;
 
-    public ChatCtrl chatCtrl;
+    public ChatModule chatModule;
 
     public ModuleManager()
     {
@@ -65,7 +65,7 @@ public class ModuleManager
 
     public void Bind()
     {
-        chatCtrl = new ChatCtrl();
+        chatModule = new ChatModule();
 
         //ÒÔÉÏÐ´Ä£¿é×¢²á
     }
