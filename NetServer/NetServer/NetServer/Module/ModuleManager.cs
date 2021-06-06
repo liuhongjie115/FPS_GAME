@@ -46,7 +46,6 @@ namespace NetServer
                     methodInfo.Invoke(item,new object[] {data,client});
                 }
             }
-
         }
     }
 }
