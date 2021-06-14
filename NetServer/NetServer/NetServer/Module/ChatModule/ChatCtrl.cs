@@ -12,18 +12,21 @@ namespace NetServer
         public ChatCtrl(Server server)
         {
             this.server = server;
-            server.ModuleManager.RegisterNet(this);
+            ModuleManager.RegisterNet(this);
         }
 
-        public void m_chat_module_toc(string data,Client client)
+        public void m_chat_module_toc(string msg,Client client)
         {
-            Console.WriteLine(data);
-            m_chat_module_tos(data, client);
+            m_chat_module_toc vo = new m_chat_module_toc();
+            vo.msg = msg;
+            client.SendMessage(vo);
         }
 
-        public void m_chat_module_tos(string data, Client client)
+        public void m_chat_module_tos(m_chat_module_tos data, Client client)
         {
-            client.SendMessage("m_chat_module_toc", data);
+
+            m_chat_module_toc(data.msg, client);
+
         }
     }
 }

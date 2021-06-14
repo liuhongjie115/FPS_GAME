@@ -6,32 +6,18 @@ using DG.Tweening;
 
 public class WindowsManager
 {
-    private static WindowsManager instance;
+    private static Stack<BasePanel> displayObjs;
 
-    public static WindowsManager Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = new WindowsManager();
-            }
-            return instance;
-        }
-    }
+    private static GameObject captureBox;
+    private static GameObject captureMask;
+    private static Image imgCaptureBox;
 
-    private Stack<BasePanel> displayObjs;
-
-    private GameObject captureBox;
-    private GameObject captureMask;
-    private Image imgCaptureBox;
-
-    public WindowsManager()
+    static WindowsManager()
     {
         displayObjs = new Stack<BasePanel>();
     }
 
-    public void Open(BasePanel obj)
+    public static void Open(BasePanel obj)
     {
         BasePanel topObj = null;
         Debug.Log("Count:"+displayObjs.Count);
@@ -54,11 +40,11 @@ public class WindowsManager
                 UIOptions uiOptions = obj.GetComponent(typeof(UIOptions)) as UIOptions;
                 if (uiOptions.fullPanel)
                 {
-                    obj.SetParent(LayerManager.Instance.RectTranFullWindows);
+                    obj.SetParent(LayerManager.RectTranFullWindows);
                 }
                 else
                 {
-                    obj.SetParent(LayerManager.Instance.RectTranWindows);
+                    obj.SetParent(LayerManager.RectTranWindows);
                 }
             }
             obj.SetAnchoredPosition(Vector2.zero);
@@ -68,7 +54,7 @@ public class WindowsManager
         }
     }
 
-    public void Close(BasePanel obj =null)
+    public static void Close(BasePanel obj =null)
     {
         BasePanel topObj = null;
         if (displayObjs.Count > 0)
@@ -101,7 +87,7 @@ public class WindowsManager
 
 
 
-    private void PausePanel(BasePanel obj)
+    private static void PausePanel(BasePanel obj)
     {
         UIOptions uiOptions = obj.GetComponent(typeof(UIOptions)) as UIOptions;
         //È«ÆÁÒÆ³ýÆÁÄ»Íâ
@@ -118,7 +104,7 @@ public class WindowsManager
         }
     }
 
-    private void ResumePanel(BasePanel obj)
+    private static void ResumePanel(BasePanel obj)
     {
         UIOptions uiOptions = obj.GetComponent(typeof(UIOptions)) as UIOptions;
         //È«ÆÁÒÆ½øÆÁÄ»
@@ -137,7 +123,7 @@ public class WindowsManager
     /// ÒÆ³öÆÁÄ»
     /// </summary>
     /// <param name="obj"></param>
-    private void MoveOutSceen(BasePanel obj)
+    private static void MoveOutSceen(BasePanel obj)
     {
         obj.RealAnchoredPosition = obj.GetAnchoredPosition();
         obj.SetAnchoredPosition(new Vector2(-50000, -50000));
@@ -147,7 +133,7 @@ public class WindowsManager
     /// ÒÆ½øÆÁÄ»
     /// </summary>
     /// <param name="obj"></param>
-    private void MoveInSceen(BasePanel obj)
+    private static void MoveInSceen(BasePanel obj)
     {
         obj.SetAnchoredPosition(obj.RealAnchoredPosition);
     }
@@ -155,14 +141,14 @@ public class WindowsManager
     /// <summary>
     /// ½ØÆÁ
     /// </summary>
-    private void CaptureScreen()
+    private static void CaptureScreen()
     {
-        Rect rect = new Rect(0, 0, LayerManager.Instance.GetWidth(), LayerManager.Instance.GetHeight());
-        Texture2D tex = ScreenShot(LayerManager.Instance.UiCamera, rect);
+        Rect rect = new Rect(0, 0, LayerManager.GetWidth(), LayerManager.GetHeight());
+        Texture2D tex = ScreenShot(LayerManager.UiCamera, rect);
         CreateCaptureBox(tex, rect);
     }
 
-    private void ClearCaptureScreen()
+    private static void ClearCaptureScreen()
     {
         if (imgCaptureBox)
         {
@@ -170,7 +156,7 @@ public class WindowsManager
         }
     }
 
-    private Texture2D ScreenShot(Camera camera, Rect rect)
+    private static Texture2D ScreenShot(Camera camera, Rect rect)
     {
         if (captureMask != null)
         {
@@ -193,19 +179,19 @@ public class WindowsManager
         return screenShot;
     }
 
-    private void CreateCaptureBox(Texture2D tex,Rect rect)
+    private static void CreateCaptureBox(Texture2D tex,Rect rect)
     {
         if(captureBox==null)
         {
             captureBox = new GameObject("CreateCaptureBox");
-            captureBox.transform.SetParent(LayerManager.Instance.RectTranWindows);
+            captureBox.transform.SetParent(LayerManager.RectTranWindows);
             captureBox.transform.localScale = Vector3.one;
-            captureBox.AddComponent<RectTransform>().sizeDelta = new Vector2(LayerManager.Instance.GetWidth(), LayerManager.Instance.GetHeight());
+            captureBox.AddComponent<RectTransform>().sizeDelta = new Vector2(LayerManager.GetWidth(), LayerManager.GetHeight());
 
             captureMask = new GameObject("captureMask");
             captureMask.transform.SetParent(captureBox.transform);
             captureMask.transform.localScale = Vector3.one;
-            captureMask.AddComponent<RectTransform>().sizeDelta = new Vector2(LayerManager.Instance.GetWidth(), LayerManager.Instance.GetHeight());
+            captureMask.AddComponent<RectTransform>().sizeDelta = new Vector2(LayerManager.GetWidth(), LayerManager.GetHeight());
             captureMask.AddComponent<Image>().color = new Color(0, 0, 0,200/255f);
             imgCaptureBox = captureBox.AddComponent<Image>();
             Button btn = captureBox.AddComponent<Button>();

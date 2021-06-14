@@ -6,7 +6,7 @@ public abstract class BaseModule
 {
     public BaseModule()
     {
-        ModuleManager.Instance.RegisterNet(this);
+        ModuleManager.RegisterNet(this);
         EventCenter.AddListener(EventType.GAME_AFTER, InitModule);
     }
 

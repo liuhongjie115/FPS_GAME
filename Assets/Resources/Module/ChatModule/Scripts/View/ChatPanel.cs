@@ -5,10 +5,11 @@ using UnityEngine.UI;
 
 public class ChatPanel : BasePanel
 {
-    public Text chatText;
-    public InputField input;
+    public Text lblText;
+    public InputField inputMsg;
     public Button btnOpen;
     public Button btnClose;
+    public Button btnSend;
 
     public ChatPanel():base("ChatModule")
     {
@@ -18,9 +19,10 @@ public class ChatPanel : BasePanel
     public override void InitUI()
     {
         //btnOpen = this.GetCompoent("btnOpen", typeof(Button)) as Button;
-        btnOpen.onClick.AddListener(() => { ModuleManager.Instance.chatModule.OpenChatPanel1(); });
+        btnOpen.onClick.AddListener(() => { ModuleManager.chatModule.OpenChatPanel1(); });
         //btnClose = this.GetCompoent("btnClose", typeof(Button)) as Button;
         btnClose.onClick.AddListener(() => { Close(); });
+        btnSend.onClick.AddListener(() => { OnClickBtn(); });
     }
 
     public override void Open()
@@ -45,18 +47,14 @@ public class ChatPanel : BasePanel
 
     public void OnClickBtn()
     {
-        m_chat_module_tos(input.text);
+        m_chat_module_tos(inputMsg.text);
     }
 
     public void m_chat_module_tos(string msg)
     {
-        ModuleManager.Instance.chatModule.m_chat_module_tos(msg);
+        ModuleManager.chatModule.m_chat_module_tos(msg);
     }
 
-    public void m_chat_module_toc(string msg)
-    {
-
-    }
 
     public override void OnGUI<T>(T a)
     {
@@ -65,7 +63,7 @@ public class ChatPanel : BasePanel
 
     public void AddMessage(string data)
     {
-        chatText.text = chatText.text + "\n" + data;
+        lblText.text = lblText.text + "\n" + data;
     }
 
 

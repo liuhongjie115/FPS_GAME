@@ -12,6 +12,9 @@ public class GameObjectUtil
         prefixType.Add("btn", typeof(Button));
         prefixType.Add("sp", typeof(Image));
         prefixType.Add("lbl", typeof(Text));
+        prefixType.Add("input", typeof(InputField));
+        prefixType.Add("tab", typeof(ToggleGroup));
+        prefixType.Add("toggle", typeof(Toggle));
     }
 
     public static Dictionary<string, System.Type> PrefixType { get => prefixType;}
@@ -25,7 +28,6 @@ public class GameObjectUtil
     /// <returns></returns>
     public static Component FindCompoent(GameObject go, string goName)
     {
-    
         foreach (KeyValuePair<string, System.Type> kvp in prefixType)
         {
             if (goName.Substring(0, kvp.Key.Length).Equals(kvp.Key))

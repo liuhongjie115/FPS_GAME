@@ -9,41 +9,38 @@ namespace NetServer
 {
     class ModuleManager
     {
-        private Server server;
-        private ChatCtrl chatCtrl;
+        private static Server server;
+        public static ChatCtrl chatCtrl;
+        public static NetModule netModule;
 
-        private List<Object> registerList = new List<object>();
+        private static List<Object> registerList = new List<object>();
 
-        public ModuleManager()
+
+        public static void Bind(Server server)
         {
-
-
-        }
-
-        public void Bind(Server server)
-        {
-            this.server = server;
+            ModuleManager.server = server;
             chatCtrl = new ChatCtrl(server);
+            netModule = new NetModule(server);
 
             //所有模块都在以上这里初始化；
         }
 
-        public void RegisterNet(Object ctrl)
+        public static void RegisterNet(Object ctrl)
         {
             registerList.Add(ctrl);
             //HandlerRequest("m_chat_module_toc", "123", null);
         }
 
-        public void HandlerRequest(string methodStr, string data, Client client)
+        public static void HandlerRequest(object vo, Client client)
         {
             Assembly assembly = Assembly.GetExecutingAssembly();  //获得当前程序集
             foreach (Object item in registerList)
             {
                 Type type = item.GetType();
-                MethodInfo methodInfo = type.GetMethod(methodStr);
+                MethodInfo methodInfo = type.GetMethod(vo.GetType().Name);
                 if(methodInfo!=null)
                 {
-                    methodInfo.Invoke(item,new object[] {data,client});
+                    methodInfo.Invoke(item,new object[] {vo, client });
                 }
             }
         }

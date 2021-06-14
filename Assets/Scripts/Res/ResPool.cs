@@ -4,38 +4,23 @@ using UnityEngine;
 
 public class ResPool
 {
-    private static ResPool instance;
-
-    public static ResPool Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = new ResPool();
-            }
-            return instance;
-        }
-    }
+    private static Dictionary<string, AssetVO> assetDict = new Dictionary<string, AssetVO>();
 
 
-    private Dictionary<string, AssetVO> assetDict = new Dictionary<string, AssetVO>();
+    static float time = 10f;
+    static float timer = 0f;
 
-
-    float time = 10f;
-    float timer = 0f;
-
-    public void Update()
+    public static void Update()
     {
         if(timer>time)
         {
             CheckResRef();
             timer = 0f;
         }
-        timer += Time.deltaTime;
+        timer += UnityEngine.Time.deltaTime;
     }
 
-    public void LoadRes(string url, System.Action<AssetVO> OnLoadComplete)
+    public static void LoadRes(string url, System.Action<AssetVO> OnLoadComplete)
     {
         if(assetDict.ContainsKey(url))
         {
@@ -47,7 +32,7 @@ public class ResPool
         }
     }
 
-    private IEnumerator LoadAsyn(string url, System.Action<AssetVO> OnLoadComplete)
+    private static IEnumerator LoadAsyn(string url, System.Action<AssetVO> OnLoadComplete)
     {
 
         ResourceRequest resourceRequest = Resources.LoadAsync<Object>(url);
@@ -58,7 +43,7 @@ public class ResPool
     }
 
 
-    private void CheckResRef()
+    private static void CheckResRef()
     {
         List<AssetVO> needDelAssetVOS = new List<AssetVO>();
         foreach (KeyValuePair<string, AssetVO> kvp in assetDict)

@@ -4,31 +4,23 @@ using UnityEngine;
 
 public class Net
 {
-    private static Net instance;
-    private NetSocket netSocket;
+    private static NetSocket netSocket;
 
-    public static Net Instance
-    {
-        get
-        {
-            if(instance==null)
-            {
-                instance = new Net();
-            }
-            return instance;
-        }
-    }
 
-    public NetSocket NetSocket { get => netSocket;}
+    public static NetSocket NetSocket { get => netSocket;}
 
-    public void Init()
+    public static void Init()
     {
         netSocket = new NetSocket();
         netSocket.Init();
     }
 
-    public void HandlerRequest(string methodStr, string data)
-    {
 
+    public static void SendMessage(object proto)
+    {
+        netSocket.SendMessage(proto);
     }
+
+
+
 }

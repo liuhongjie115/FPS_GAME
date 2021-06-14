@@ -37,8 +37,8 @@ namespace NetServer
             serverSocket.Bind(iPEndPoint);
             serverSocket.Listen(0);
             serverSocket.BeginAccept(AcceptCallBack, null);
-            moduleManager = new ModuleManager();
-            moduleManager.Bind(this);
+            ModuleManager.Bind(this);
+            TimerManager.Init();
         }
 
         private void AcceptCallBack(IAsyncResult async)
@@ -48,22 +48,25 @@ namespace NetServer
             Client client = new Client(clientSocket, this);
             client.Start();
             clientList.Add(client);
+            ModuleManager.netModule.AddClient(client);
+            serverSocket.BeginAccept(AcceptCallBack, null);
         }
 
-        public void HandlerRequest(string methodStr,string data,Client client)
+        public void HandlerRequest(object vo,Client client)
         {
-            moduleManager.HandlerRequest(methodStr,data, client);
+            ModuleManager.HandlerRequest(vo, client);
         }
 
         public void RemoveClient(Client client)
         {
-            if(clientList.Contains(client))
+            lock(clientList)
             {
-                clientList.Remove(client);
+                if (clientList.Contains(client))
+                {
+                    clientList.Remove(client);
+                }
+                ModuleManager.netModule.RemoveClient(client);
             }
         }
-
- 
-
     }
 }

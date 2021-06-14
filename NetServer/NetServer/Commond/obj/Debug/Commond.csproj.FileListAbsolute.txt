@@ -1,0 +1,5 @@
+F:\Project\Client\NetServer\NetServer\Commond\bin\Debug\Commond.dll
+F:\Project\Client\NetServer\NetServer\Commond\bin\Debug\Commond.pdb
+F:\Project\Client\NetServer\NetServer\Commond\obj\Debug\Commond.csproj.CoreCompileInputs.cache
+F:\Project\Client\NetServer\NetServer\Commond\obj\Debug\Commond.dll
+F:\Project\Client\NetServer\NetServer\Commond\obj\Debug\Commond.pdb

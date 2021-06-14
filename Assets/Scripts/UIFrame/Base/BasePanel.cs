@@ -14,7 +14,7 @@ public abstract class BasePanel : DisplayObj
 
     public virtual void Open()
     {
-        WindowsManager.Instance.Open(this);
+        WindowsManager.Open(this);
     }
 
     public virtual void OnOpen()
@@ -24,7 +24,7 @@ public abstract class BasePanel : DisplayObj
 
     public virtual void Close()
     {
-        WindowsManager.Instance.Close(this);
+        WindowsManager.Close(this);
     }
 
     public virtual void OnClose()
