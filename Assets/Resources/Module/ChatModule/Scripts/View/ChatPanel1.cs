@@ -17,7 +17,7 @@ public class ChatPanel1 : BasePanel
 
     public override void InitUI()
     {
-        btnOpen.onClick.AddListener(() => { ModuleManager.Instance.chatModule.OpenChatPanel2(); });
+        btnOpen.onClick.AddListener(() => { ModuleManager.chatModule.OpenChatPanel2(); });
         btnClose.onClick.AddListener(() => { Close(); });
     }
 
@@ -43,7 +43,7 @@ public class ChatPanel1 : BasePanel
 
     public void OnClickBtn()
     {
-        ModuleManager.Instance.chatModule.m_chat_module_tos(input.text);
+        ModuleManager.chatModule.m_chat_module_tos(input.text);
     }
 
     public override void OnGUI<T>(T a)

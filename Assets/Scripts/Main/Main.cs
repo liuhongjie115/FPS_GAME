@@ -24,21 +24,22 @@ public class Main : MonoBehaviour
 
     private void InitNet()
     {
-        Net.Instance.Init();
+        Net.Init();
     }
 
     private void InitModule()
     {
-        ModuleManager.Instance.Bind();
+        ModuleManager.Bind();
     }
     private void InitUIFrame()
     {
-        LayerManager.Instance.Init();
+        LayerManager.Init();
     }
     private void Update()
     {
-        ModuleManager.Instance.Update();
-        ResPool.Instance.Update();
+        //ModuleManager.Update();
+        ResPool.Update();
+        TimerManager.Update();
     }
 
 

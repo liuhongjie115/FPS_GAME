@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -53,14 +54,22 @@ public class ChatModule:BaseModule
         }
     }
 
-    public void m_chat_module_toc(string data)
+    public void m_chat_module_toc(m_chat_module_toc vo)
     {
-        Debug.Log(data);
-        chatPanel.AddMessage(data);
+        Debug.Log(vo.msg);
+        chatPanel.AddMessage(vo.msg);
     }
 
-    public void m_chat_module_tos(string data)
+    //public void m_chat_module_tos(string msg)
+    //{
+    //    m_chat_module_tos pro = new m_chat_module_tos();
+    //    pro.msg = msg;
+    //    Net.Instance.NetSocket.SendMessage("m_chat_module_tos", pro);
+    //}
+    public void m_chat_module_tos(string msg)
     {
-        Net.Instance.NetSocket.SendMessage("m_chat_module_toc", data);
+        m_chat_module_tos m_Chat_Module_Tos = new m_chat_module_tos();
+        m_Chat_Module_Tos.msg = msg;
+        Net.SendMessage(m_Chat_Module_Tos);
     }
 }

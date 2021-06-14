@@ -24,31 +24,31 @@ public struct MsgItem
 
 public class ModuleManager
 {
-    private static ModuleManager instance;
-    public static ModuleManager Instance
-    {
-        get
-        {
-            if(instance==null)
-            {
-                instance = new ModuleManager();
-            }
-            return instance;
-        }
-    }
+    //private static ModuleManager instance;
+    //public static ModuleManager Instance
+    //{
+    //    get
+    //    {
+    //        if(instance==null)
+    //        {
+    //            instance = new ModuleManager();
+    //        }
+    //        return instance;
+    //    }
+    //}
 
-    private List<System.Object> registerList;
-    private Queue<MsgItem> msgQueues;
+    private static List<System.Object> registerList;
+    private static Queue<MsgItem> msgQueues;
 
-    public ChatModule chatModule;
+    public static ChatModule chatModule;
 
-    public ModuleManager()
+    static ModuleManager()
     {
         registerList = new List<System.Object>();
         msgQueues = new Queue<MsgItem>();
     }
 
-    public void Update()
+    public static void Update()
     {
         if(msgQueues!=null)
         {
@@ -63,29 +63,34 @@ public class ModuleManager
        
     }
 
-    public void Bind()
+    public static void Bind()
     {
         chatModule = new ChatModule();
 
         //以上写模块注册
     }
 
-    public void RegisterNet(System.Object ctrl)
+    public static void RegisterNet(System.Object ctrl)
     {
         registerList.Add(ctrl);
     }
 
-    public void HandlerRequest(string methodStr, string data)
+
+    /// <summary>
+    /// 协议转发响应
+    /// </summary>
+    /// <param name="o"></param>
+    public static void HandlerRequest(object o)
     {
         Assembly assembly = Assembly.GetExecutingAssembly();  //获得当前程序集
         foreach (System.Object item in registerList)
         {
             Type type = item.GetType();
-            MethodInfo methodInfo = type.GetMethod(methodStr);
+            MethodInfo methodInfo = type.GetMethod(o.GetType().Name);
             if (methodInfo != null)
             {
                 //methodInfo.Invoke(item, new object[] { data});
-                msgQueues.Enqueue(new MsgItem(methodInfo, item, new object[] { data }));
+                msgQueues.Enqueue(new MsgItem(methodInfo, item, new object[] { o }));
             }
         }
     }

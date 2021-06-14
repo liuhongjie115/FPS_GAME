@@ -4,44 +4,33 @@ using UnityEngine;
 
 public class LayerManager
 {
-    private static LayerManager instance;
 
-    public static LayerManager Instance { get
-        {
-            if(instance==null)
-            {
-                instance = new LayerManager();
-            }
-            return instance;
-        }
-    }
-
-    public Transform RectTranWindows { get => rectTranWindows;}
-    public Transform RectTranFullWindows { get => rectTranFullWindows;  }
-    public Camera UiCamera { get => uiCamera; }
+    public static Transform RectTranWindows { get => rectTranWindows;}
+    public static Transform RectTranFullWindows { get => rectTranFullWindows;  }
+    public static Camera UiCamera { get => uiCamera; }
 
     private const int SORT = 100;
 
-    private Camera uiCamera;
-    private Canvas uiRoot;
-    private Transform rectTranRoot;
+    private static Camera uiCamera;
+    private static Canvas uiRoot;
+    private static Transform rectTranRoot;
 
-    private Transform rectTranWindows;
-    private Transform rectTranFullWindows;
+    private static Transform rectTranWindows;
+    private static Transform rectTranFullWindows;
 
-    public void Init()
+    public static void Init()
     {
         InitCamera();
         InitLayer();
     }
 
 
-    private void InitCamera()
+    private static void InitCamera()
     {
         uiCamera = GameObject.Find("UIRoot/Camera").GetComponent<Camera>();
     }
 
-    private void InitLayer()
+    private static void InitLayer()
     {
         uiRoot = GameObject.Find("UIRoot").GetComponent<Canvas>();
         rectTranRoot = GameObject.Find("UIRoot/rectTranRoot").transform;
@@ -56,14 +45,14 @@ public class LayerManager
     }
 
 
-    public float GetWidth()
+    public static float GetWidth()
     {
-        return (this.rectTranRoot as RectTransform).sizeDelta.x;
+        return (rectTranRoot as RectTransform).sizeDelta.x;
     }
 
-    public float GetHeight()
+    public static float GetHeight()
     {
-        return (this.rectTranRoot as RectTransform).sizeDelta.y;
+        return (rectTranRoot as RectTransform).sizeDelta.y;
     }
 
 }

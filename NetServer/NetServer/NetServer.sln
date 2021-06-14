@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.1525
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetServer", "NetServer\NetServer.csproj", "{2AAE5AD4-B5C9-482F-A525-F2712D8FB464}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commond", "Commond\Commond.csproj", "{A95D88E3-23DB-40CD-865C-71F424063DE4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{2AAE5AD4-B5C9-482F-A525-F2712D8FB464}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2AAE5AD4-B5C9-482F-A525-F2712D8FB464}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2AAE5AD4-B5C9-482F-A525-F2712D8FB464}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A95D88E3-23DB-40CD-865C-71F424063DE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A95D88E3-23DB-40CD-865C-71F424063DE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A95D88E3-23DB-40CD-865C-71F424063DE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A95D88E3-23DB-40CD-865C-71F424063DE4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

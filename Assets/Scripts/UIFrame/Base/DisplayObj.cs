@@ -47,7 +47,7 @@ public abstract class DisplayObj
         {
             isLoading = true;
             isLoadFinish = false;
-            ResPool.Instance.LoadRes(url, OnLoadComplete);
+            ResPool.LoadRes(url, OnLoadComplete);
         }
     }
 

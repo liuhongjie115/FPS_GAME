@@ -38,6 +38,7 @@ public class NetSocket
         {
             if (clientSocket == null || clientSocket.Connected == false) return;
             int count = clientSocket.EndReceive(ar);
+            Debug.Log("接收:"+count);
             msg.ReadMessage(count,OnProcessMessage);
             Start();
         }
@@ -52,14 +53,16 @@ public class NetSocket
     /// </summary>
     /// <param name="methodStr"></param>
     /// <param name="data"></param>
-    private void OnProcessMessage(string methodStr, string data)
+    private void OnProcessMessage(object o)
     {
-        ModuleManager.Instance.HandlerRequest(methodStr, data);
+        Debug.Log("处理:");
+        ModuleManager.HandlerRequest(o);
     }
 
-    public void SendMessage(string methodStr,string str)
+    public void SendMessage(object proto)
     {
-        clientSocket.Send(msg.PackData(methodStr,str));
+        clientSocket.Send(msg.PackData(proto));
         Debug.Log("发送");
     }
+
 }

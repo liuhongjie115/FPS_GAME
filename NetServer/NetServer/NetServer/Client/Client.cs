@@ -23,6 +23,7 @@ namespace NetServer
 
         public void Start()
         {
+            if (clientSocket == null || clientSocket.Connected == false) return;
             clientSocket.BeginReceive(msg.data, msg.startIndex, msg.RemainSize, SocketFlags.None, ReceiveCallback, null);
         }
 
@@ -36,10 +37,8 @@ namespace NetServer
                 {
                     Close();
                 }
-                else
-                {
-                    msg.ReadMessage(count,OnProcessMessage);
-                }
+                msg.ReadMessage(count,OnProcessMessage);
+                Start();
             }
             catch (Exception e)
             {
@@ -48,28 +47,39 @@ namespace NetServer
             }
             finally
             {
-                Start();
+                
             }
         }
 
-        private void OnProcessMessage(string methodStr,string data)
+        private void OnProcessMessage(object vo)
         {
-            server.HandlerRequest(methodStr,data, this);
+            server.HandlerRequest(vo, this);
         }
 
-        public void SendMessage(string methodStr,string s)
+        public void SendMessage(object vo)
         {
-            clientSocket.Send(msg.PackData(methodStr, s));
-        }
-
-        private void Close()
-        {
-            if(clientSocket!=null)
+            try
             {
-                clientSocket.Close();
-                server.RemoveClient(this);
-                Console.WriteLine("移除一个客户端:"+(clientSocket.RemoteEndPoint as IPEndPoint).Address);
+                clientSocket.Send(msg.PackData(vo));
             }
+            catch(Exception e)
+            {
+
+            }
+
+        }
+
+        public void Close()
+        {
+            server.RemoveClient(this);
+            if (clientSocket!=null)
+            {
+                if(clientSocket.Connected)
+                {
+                    clientSocket.Close();
+                }
+            }
+            Console.WriteLine("移除一个客户端");
         }
     }
 }
